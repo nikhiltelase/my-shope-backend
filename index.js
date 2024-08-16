@@ -7,7 +7,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const app = express();
-const port = 1111;
+const port = process.env.PORT;
 connectDb();
 
 app.use(express.json());
@@ -26,5 +26,5 @@ app.use("/item", itemRoutes);
 app.use("/user", userRoutes)
 
 app.listen(port, () => {
-  console.log(`app start on port: http://localhost:${process.env.PORT}`);
+  console.log(`app start on port: http://localhost:${port}`);
 });

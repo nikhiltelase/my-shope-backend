@@ -84,7 +84,7 @@ export const signIn = async (req, res) => {
   }
 };
 
-// Get a current user by jwt token
+// Get a current user by jwt token, this is protect route
 export const currentUser = async (req, res) => {
   try {
     const user = await User.findById(req.userId);
@@ -97,7 +97,7 @@ export const currentUser = async (req, res) => {
   }
 };
 
-// Update a user by jwt token
+// Update a user by jwt token, this is protect route
 export const updateUser = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.userId, req.body, {
