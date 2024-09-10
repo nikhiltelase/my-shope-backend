@@ -8,6 +8,7 @@ const connectDb = () => {
         console.log("connected to database successfully.")
     } catch (error) {
         console.log("database error", error)
+        process.exit(1);
     }
 }
 
