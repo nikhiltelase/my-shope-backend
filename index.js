@@ -12,8 +12,11 @@ connectDb();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cors({ origin: process.env.FRONTED_URL }));
+
+app.get("/", (req, res) => {
+  res.send("jay shree ram");
+});
 
 app.use("/item", itemRoutes);
 app.use("/user", userRoutes);
