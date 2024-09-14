@@ -27,6 +27,7 @@ P.S. For your security, never share your OTP with anyone.
     const response = await sendEmail(userEmail, subject, body);
     return response;
   } catch (error) {
+    console.log(error)
     return false;
   }
 };

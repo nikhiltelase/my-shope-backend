@@ -135,10 +135,11 @@ export const sendOtp = async (req, res) => {
     const sendEmailCheck = await sendOtpEmail(email, user.name, otp);
 
     if (!sendEmailCheck) {
-      return sendResponse(res, 400, false, "error to send otp try again.");
+      return sendResponse(res, 400, false, "error to send otp .");
     }
     return sendResponse(res, 200, true, "OTP sent successfully.", { token });
   } catch (error) {
+    console.log(error);
     sendResponse(res, 500, false, error.message);
   }
 };
@@ -203,7 +204,12 @@ export const forgetPassword = async (req, res) => {
     // Send email to inform user to password changed
     const sendEmailCheck = await sendPasswordChangeEmail(user.email, user.name);
     if (!sendEmailCheck) {
-      return sendResponse(res, 400, false, "error to update password try again.");
+      return sendResponse(
+        res,
+        400,
+        false,
+        "error to update password try again."
+      );
     }
 
     sendResponse(res, 200, true, "Password changed successfully.");
