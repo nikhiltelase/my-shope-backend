@@ -1,14 +1,18 @@
 import Item from "../models/itemModel.js";
 
-//get all items
+// Get all items with pagination
 export const allItems = async (req, res) => {
   try {
-    const { limit, start } = req.query;
+    let { limit = 10, start = 0 } = req.query;
 
-    const items = await Item.find();
-    const sendItems = items.slice(start, Number(start) + Number(limit));
+    // Ensure limit and start are numbers
+    limit = parseInt(limit);
+    start = parseInt(start);
 
-    return res.status(200).json({ success: true, items: sendItems });
+    // Fetch items with pagination
+    const items = await Item.find().skip(start).limit(limit);
+
+    return res.status(200).json({ success: true, items });
   } catch (error) {
     return res.status(404).json({ success: false, message: error.message });
   }
