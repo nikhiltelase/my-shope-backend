@@ -7,8 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
-connectDb();
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +20,25 @@ app.get("/", (req, res) => {
 app.use("/item", itemRoutes);
 app.use("/user", userRoutes);
 
-app.listen(port, () => {
-  console.log(`app start on port: http://localhost:${port}`);
+// Connect to database and start server
+const startServer = async () => {
+  await connectDb();
+  const server = app.listen(port, () => {
+    console.log(`🚀 Connect Robo Backend started on port: http://localhost:${port}`);
+  });
+  
+  server.on('error', (error) => {
+    if (error.code === 'EADDRINUSE') {
+      console.error(`❌ Port ${port} is already in use. Please free the port or use a different port.`);
+      process.exit(1);
+    } else {
+      console.error('❌ Server error:', error);
+      process.exit(1);
+    }
+  });
+};
+
+startServer().catch((error) => {
+  console.error('❌ Failed to start server:', error);
+  process.exit(1);
 });
